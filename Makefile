@@ -2,7 +2,7 @@
 DIRC_VERSION=0.0.4
 
 
-build: fmt get gen
+build: get fmt gen
 	go build --tags=netgo
 
 run: fmt gen
