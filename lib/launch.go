@@ -28,7 +28,24 @@ func Launch(port string, pport string, width, height int) (ln net.Listener, w we
 	w = webview.New(debug)
 	//	defer w.Destroy()
 	/*localStorage["dirc-wt-config"] = JSON.stringify({rtcConfig: {tracker: {iceServers: [{urls: 'ppnxqa3o6ldzjaurbm4vrbutwsdlmaar5hhamga6jxvmstkeo4uq.b32.i2p' }, {url: 'YOUR-OTHER-SERVER'}, ...] }}});*/
-	w.Init("localStorage[\"dirc-wt-config\"] = JSON.stringify({rtcConfig: {tracker: {iceServers: [{urls: 'ppnxqa3o6ldzjaurbm4vrbutwsdlmaar5hhamga6jxvmstkeo4uq.b32.i2p' },] }}});")
+	w.Init(`
+localStorage['dirc-wt-config'] = JSON.stringify({
+  rtcConfig: {
+    tracker: {
+      iceServers: [{
+        urls: 'ppnxqa3o6ldzjaurbm4vrbutwsdlmaar5hhamga6jxvmstkeo4uq.b32.i2p'
+      }],
+    }
+  }
+});
+announceList = [
+  ['http://yru3sbhbksao6uoaes4n56jtnmqa3k2i5mv67c7lb2x7eqcfp2la.b32.i2p'],
+  ['wss://yru3sbhbksao6uoaes4n56jtnmqa3k2i5mv67c7lb2x7eqcfp2la.b32.i2p'],
+  ['wss://tracker.btorrent.xyz'],
+  ['wss://tracker.openwebtorrent.com']
+]
+global.WEBTORRENT_ANNOUNCE = announceList
+	`)
 	w.SetTitle("di2prc")
 	w.SetSize(width, height, webview.HintFixed)
 	w.Navigate(fmt.Sprintf("http://%s", ln.Addr().(i2pkeys.I2PAddr).Base32()))

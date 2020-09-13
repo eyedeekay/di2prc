@@ -13,6 +13,8 @@ test:
 
 fmt: style
 	gofmt -w -s *.go */*.go
+	fixjsstyle lib/init.js
+
 
 clean:
 	rm i2pcontrol.js
