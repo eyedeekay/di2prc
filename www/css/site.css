@@ -8,14 +8,14 @@ html,body {
   margin: 0px;
   padding: 0px;
   max-height: 100vh;
-  background-color: #222;
+  background-color: #1F1A24;
 }
 
 body * {
   box-sizing: border-box;
   font-family: "Cutive Mono", monospace;
   font-weight: bold;
-  background-color: #222;
+  background-color: #1F1A24;
   color: #b8b8b8;
   font-size: 20px;
   text-rendering: auto;

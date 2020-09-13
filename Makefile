@@ -11,7 +11,7 @@ run: fmt gen
 test:
 	cd import && go test
 
-fmt:
+fmt: style
 	gofmt -w -s *.go */*.go
 
 clean:
@@ -22,6 +22,9 @@ i2pcontrol.js:
 
 gen:
 	go run --tags=generate gen.go
+
+style:
+	sed -i 's|#222|#1F1A24|g' www/css/site.css
 
 get:
 	rm -rf v$(DIRC_VERSION).zip www
