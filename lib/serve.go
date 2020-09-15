@@ -65,9 +65,9 @@ var Options_DChat_Short = []string{"inbound.length=1", "outbound.length=1", "inb
 
 func Listen(yoursam, certfile, keyfile string) net.Listener {
 	opts := make(map[string]string)
-	opts[`sam`] = "127.0.0.1:7656"
-	opts[`keypath`] = "keys.i2pkeys"
-	opts[`servertun`] = "serv" + sammy.RandStringBytes()
+	opts[`sam`] = yoursam
+	opts[`servertun`] = "dirc2p" + sammy.RandStringBytes()
+	opts[`keypath`] = opts[`servertun`]+".i2pkeys"
 	ln, err := sammy.Sammy(opts)
 	if err != nil {
 		log.Fatal(err)
