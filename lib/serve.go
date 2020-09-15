@@ -3,8 +3,7 @@ package di2prc
 import (
 	"bytes"
 	//	"fmt"
-	"github.com/eyedeekay/sam3"
-	//	"github.com/eyedeekay/sam3/i2pkeys"
+	"github.com/eyedeekay/samsocks/sammy"
 	"github.com/justinas/nosurf"
 	"io"
 	"log"
@@ -65,19 +64,11 @@ func FileServer(files *fs) *fileServer {
 var Options_DChat_Short = []string{"inbound.length=1", "outbound.length=1", "inbound.lengthVariance=0", "outbound.lengthVariance=0", "inbound.quantity=3", "outbound.quantity=3", "inbound.backupQuantity=2", "outbound.backupQuantity=2", "i2cp.closeOnIdle=false", "i2cp.reduceOnIdle=false", "i2cp.leaseSetEncType=4,0"}
 
 func Listen(yoursam, certfile, keyfile string) net.Listener {
-	sam, err := sam3.NewSAM(yoursam)
-	if err != nil {
-		log.Fatal(err)
-	}
-	keys, err := sam.NewKeys()
-	if err != nil {
-		log.Fatal(err)
-	}
-	stream, err := sam.NewStreamSession("dirctun", keys, Options_DChat_Short)
-	if err != nil {
-		log.Fatal(err)
-	}
-	ln, err := stream.Listen()
+	opts := make(map[string]string)
+	opts[`sam`] = "127.0.0.1:7656"
+	opts[`keypath`] = "keys.i2pkeys"
+	opts[`servertun`] = "serv" + sammy.RandStringBytes()
+	ln, err := sammy.Sammy(opts)
 	if err != nil {
 		log.Fatal(err)
 	}

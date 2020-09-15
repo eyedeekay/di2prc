@@ -12,15 +12,15 @@ import (
 	"github.com/webview/webview"
 )
 
-func Launch(port string, pport string, width, height int) (ln net.Listener, w webview.WebView) {
+func Launch(port string, hport, pport string, width, height int) (ln net.Listener, w webview.WebView) {
 	ln = Listen(port, "", "")
 	//	defer ln.Close()
 	debug := true
-	os.Setenv("http_proxy", "http://"+pport)
+	os.Setenv("http_proxy", "http://"+hport)
 	os.Setenv("https_proxy", "http://"+pport)
 	os.Setenv("ftp_proxy", "http://"+pport)
 	os.Setenv("all_proxy", "http://"+pport)
-	os.Setenv("HTTP_PROXY", "http://"+pport)
+	os.Setenv("HTTP_PROXY", "http://"+hport)
 	os.Setenv("HTTPS_PROXY", "http://"+pport)
 	os.Setenv("FTP_PROXY", "http://"+pport)
 	os.Setenv("ALL_PROXY", "http://"+pport)
@@ -33,8 +33,19 @@ localStorage['dirc-wt-config'] = JSON.stringify({
   rtcConfig: {
     tracker: {
       iceServers: [{
-        urls: 'ppnxqa3o6ldzjaurbm4vrbutwsdlmaar5hhamga6jxvmstkeo4uq.b32.i2p'
+        urls: 'stun:ppnxqa3o6ldzjaurbm4vrbutwsdlmaar5hhamga6jxvmstkeo4uq.b32.i2p'
       }],
+    }
+  }
+});
+localStorage['dirc-wt-config'] = JSON.stringify({
+  tracker: {
+    rtcConfig: {
+      tracker: {
+        iceServers: [{
+          urls: 'stun:ppnxqa3o6ldzjaurbm4vrbutwsdlmaar5hhamga6jxvmstkeo4uq.b32.i2p'
+        }],
+      }
     }
   }
 });
@@ -43,8 +54,8 @@ announceList = [
   ['wss://yru3sbhbksao6uoaes4n56jtnmqa3k2i5mv67c7lb2x7eqcfp2la.b32.i2p'],
   ['wss://tracker.btorrent.xyz'],
   ['wss://tracker.openwebtorrent.com']
-]
-global.WEBTORRENT_ANNOUNCE = announceList
+];
+WEBTORRENT_ANNOUNCE = announceList;
 	`)
 	w.SetTitle("di2prc")
 	w.SetSize(width, height, webview.HintFixed)
